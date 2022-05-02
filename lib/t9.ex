@@ -18,11 +18,11 @@ defmodule T9 do
     combos(String.split(input, "", trim: true), [])
   end
 
-  def combos([digit | []], _accumulator) do
+  defp combos([digit | []], _accumulator) do
     @digitLetters[digit]
   end
 
-  def combos([digit | tail], accumulator) do
+  defp combos([digit | tail], accumulator) do
     # get the letters associated with the digit
     letters = @digitLetters[digit]
 
