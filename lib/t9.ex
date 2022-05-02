@@ -1,18 +1,35 @@
 defmodule T9 do
   @moduledoc """
-  Documentation for `T9`.
+  Just another implementation of the T9 keyboard.
   """
 
-  @doc """
-  Hello world.
+  @digitLetters %{
+    "2" => ~w[a b c],
+    "3" => ~w[d e f],
+    "4" => ~w[g h i],
+    "5" => ~w[j k l],
+    "6" => ~w[m n o],
+    "7" => ~w[p q r s],
+    "8" => ~w[t u v],
+    "9" => ~w[w x y z]
+  }
 
-  ## Examples
+  def combos(input) do
+    combos(String.split(input, "", trim: true), [])
+  end
 
-      iex> T9.hello()
-      :world
+  def combos([digit | []], _accumulator) do
+    @digitLetters[digit]
+  end
 
-  """
-  def hello do
-    :world
+  def combos([digit | tail], accumulator) do
+    # get the letters associated with the digit
+    letters = @digitLetters[digit]
+
+    # get all the suffixes and append the letters
+    suffixes = combos(tail, accumulator)
+
+    # make a new list
+    for letter <- letters, suffix <- suffixes, do: letter <> suffix
   end
 end
